@@ -70,3 +70,52 @@ var productExceptSelf = function (nums) {
     }
     return output;
 };
+
+
+//#53 Maximum Subarray
+//Summary: Implement Kadanes algorithm for most efficient process
+//Time Complexity: O(n)
+var maxSubArray = function (nums) {
+    let currentMax = nums[0];
+    let max = nums[0];
+
+    for (let i = 1; i < nums.length; i += 1) {
+        currentMax = Math.max(currentMax + nums[i], nums[i]);
+        max = Math.max(currentMax, max);
+    }
+    return max;
+}
+
+//#152 Maximum Product Subarray
+//Summary: Utilize Kadanes algorithm to keep track of min and max
+//Time Complexity: O(n)
+var maxProduct = function (nums) {
+    let max = nums[0];
+    let currMax = 1;
+    let currMin = 1;
+    for (let i = 0; i < nums.length; i++) {
+        let tempMax = currMax;
+        currMax = Math.max(Math.max(nums[i] * currMax, nums[i] * currMin), nums[i])
+        currMin = Math.min(Math.min(nums[i] * tempMax, nums[i] * currMin), nums[i])
+        max = Math.max(currMax, max)
+    }
+    return max
+};
+
+
+//#153 Find Minimum in Rotated Sorted Array
+//Summary: Utilize binary search to break up array based of endpoints.
+var findMin = function (nums) {
+    if (nums.length == 1) {
+        return nums[0];
+    }
+
+    let mid = Math.floor(nums.length / 2);
+    if (nums[mid] < nums[mid - 1]) {
+        return nums[mid];
+    } else if (nums[mid] > nums[0] && nums[mid] > nums[nums.length - 1]) {
+        return findMin(nums.slice(mid + 1, nums.length));
+    } else {
+        return findMin(nums.slice(0, mid));
+    }
+};
