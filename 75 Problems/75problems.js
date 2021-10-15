@@ -203,3 +203,24 @@ var threeSum = function (nums) {
     }
     return rtn;
 };
+
+
+//11 Container with Most Water
+//Two pointer approach built on assumption that the smaller sides greatest 
+//volume will come at max length, so iterate the smaller side towards the center
+//Time Complexity: O(N)
+
+var maxArea = function (height) {
+    let i = 0;
+    let max = 0;
+    let j = height.length - 1;
+    while (i < j) {
+        max = Math.max(max, Math.min(height[i], height[j]) * (j - i));
+        if (height[i] < height[j]) {
+            i++
+        } else {
+            j--;
+        }
+    }
+    return max
+};
