@@ -10,7 +10,7 @@ var getSum = function (a, b) {
         a = a ^ b;
         b = carry;
     }
-    return a ^ b;
+    return a;
 };
 
 
@@ -67,4 +67,30 @@ var missingNumber = function (nums) {
         arr[nums[i]] = nums[i];
     }
     return arr.indexOf(-1)
+};
+
+//OR
+
+var missingNumber = function (nums) {
+    // Use reduce to add all the values to a sum variable
+    let sum = nums.reduce((prev, curr) => prev + curr);
+    // Define the number of items (and last item)
+    let n = nums.length + 1;
+    // Using the Gauss's law, we can calculate the expected total, and then subtract the sum from it
+    return (n * (n - 1)) / 2 - sum;
+};
+
+
+//#190: Reverse Bits
+//Right shift original number, add 1 if 1 in numbers place exits. Basically construct
+//number in reverse.
+var reverseBits = function (n) {
+    var result = 0;
+    var count = 32;
+    while (count--) {
+        result *= 2;
+        result += n & 1;
+        n = n >> 1;
+    }
+    return result;
 };
