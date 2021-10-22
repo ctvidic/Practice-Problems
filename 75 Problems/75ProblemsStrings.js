@@ -114,3 +114,24 @@ var characterReplacement = function (s, k) {
     }
     return right - left;
 };
+
+//49 Group Anagrams
+//Summary: Sort word, see if its in hash, push into resulting hash index
+//Time Complexity(O(N)??)
+
+var groupAnagrams = function (strs) {
+    let hash = {};
+    let hashI;
+    let finalArr = [];
+    for (let i = 0; i < strs.length; i++) {
+        let wordSorted = strs[i].split('').sort().join('')
+        hashI = hash[wordSorted]
+        if (hashI === undefined) {
+            hash[wordSorted] = finalArr.length;
+            finalArr.push([strs[i]]);
+        } else {
+            finalArr[hashI].push(strs[i])
+        }
+    }
+    return finalArr
+};
