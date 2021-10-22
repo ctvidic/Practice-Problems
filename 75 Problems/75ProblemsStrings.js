@@ -36,3 +36,81 @@ var isValid = function (s) {
     return s === ""
 };
 
+//#125 Valid Palindrome
+//Summary: Easiest way is to get rid of excess characters and then set up the 
+//two pointer approach
+//Time Complexity: O(n)
+
+var isPalindrome = function (s) {
+    s = s.replace(/[^a-zA-Z0-9]/g, '')
+    s = s.toLowerCase()
+    for (let [i, j] = [0, s.length - 1]; i < j;) {
+        if (s[i] != s[j]) {
+            return false
+        }
+        i++
+        j--
+    }
+    return true
+};
+
+//242 Valid Anagram
+//Summary: Sort then compare, simple.
+//Time Complexity: O(n)
+
+var isAnagram = function (s, t) {
+    let sSort = s.split('').sort().join('');
+    let tSort = t.split('').sort().join('');
+    if (sSort === tSort) {
+        return true
+    }
+    return false
+};
+
+//#3 Longest Substring Without Repeating Characters
+//Summary: Sliding window method, if value is present in hash and the index is greater
+//then j, move j to index + 1, keep track of max, that being the window(i-j)
+//Time Complexity: O(n)
+
+var lengthOfLongestSubstring = function (s) {
+    let splitS = s.split('');
+    let max = 0;
+    let j = 0;
+    let hash = {};
+    for (let i = 0; i < splitS.length; i++) {
+        if (hash.hasOwnProperty(splitS[i]) && hash[splitS[i]] >= j) {
+            j = hash[splitS[i]] + 1
+        }
+        hash[splitS[i]] = i;
+        max = Math.max(max, i - j + 1)
+    }
+    return max;
+
+};
+
+//#424 Longest Repeating Character Replacement
+//Summary : Sliding window method, important to understand you always want to replace
+//characters that are not the max character within a string. Sliding window will
+//optomize for the maximum in this case.
+//Time Complexity: O(N)
+
+var characterReplacement = function (s, k) {
+    let splitS = s.split('');
+    let left = 0;
+    let charCount = {};
+    let maxCharCount = 0;
+    let right = 0;
+    for (right; right < splitS.length; right++) {
+        if (charCount.hasOwnProperty(splitS[right])) {
+            charCount[splitS[right]]++;
+        } else {
+            charCount[splitS[right]] = 1;
+        }
+        maxCharCount = Math.max(maxCharCount, charCount[splitS[right]]);
+        if (right - left + 1 - maxCharCount > k) {
+            charCount[splitS[left]]--
+            left++;
+        }
+    }
+    return right - left;
+};

@@ -64,7 +64,31 @@ const replaceUrlSpaces = (str) => {
 }
 
 
-//Problem 1.9
+//Problem 1.6
+//#443 String Compression
+//Summary: Annoying problem, utilize splice and counts to either DECREMENT
+//through the array
+
+var compress = function (chars) {
+    let n = chars.length;
+    let count = 1;
+
+    for (let i = n - 2; i >= 0; i--) {
+        if (chars[i] == chars[i + 1]) {
+            count++;
+        } else if (count > 1) {
+            chars.splice(i + 2, count - 1, ...count.toString().split(''));
+            count = 1;
+        }
+    }
+    if (count > 1) {
+        chars.splice(1, count - 1, ...count.toString().split(''));
+    }
+
+    return chars.length;
+};
+
+//Problem 1.7
 //#48 Rotate Image
 //Summary: First transpose, then reverse values,all while working on one array.
 //Time Complexity: O(N)
@@ -180,27 +204,3 @@ var rotateString = function (string1, string2) {
     return (string2 + string2).includes(string1); 
 };
 
-//Problem 1.6
-//#443 String Compression
-//Summary: Annoying problem, utilize splice and counts to either decrement
-//increment through the array.
-
-var compress = function (chars) {
-    let n = chars.length;
-    let count = 1;
-
-    for (let i = n - 2; i >= 0; i--) {
-        if (chars[i] == chars[i + 1]) {
-            count++;
-        } else if (count > 1) {
-            chars.splice(i + 2, count - 1, ...count.toString().split(''));
-            count = 1;
-        }
-    }
-
-    if (count > 1) {
-        chars.splice(1, count - 1, ...count.toString().split(''));
-    }
-
-    return chars.length;
-};
