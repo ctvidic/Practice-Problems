@@ -135,3 +135,38 @@ var groupAnagrams = function (strs) {
     }
     return finalArr
 };
+
+
+//5 Longest Palindromic Substring
+//Summary: Iterate through array, and expand from each point allowing either
+//even or odd palindromes. Expand until not a palindrome. Compare to max,
+//and then set substring.
+//Time Complexity: O(n^2)
+
+function longestPalindrome(s) {
+    let splitS = s.split('');
+    let max = 0;
+    let maxString = '';
+    for (let i = 0; i < splitS.length; i++) {
+        let single = returnCount(s, i, i);
+        let double = returnCount(s, i, i + 1);
+        if (single > max && single >= double) {
+            max = single
+            maxString = s.substring(i - Math.floor(max / 2), i + Math.floor(max / 2) + 1);
+        } else if (double > max && double > single) {
+            max = double
+            maxString = s.substring(i - (max / 2) + 1, i + (max / 2) + 1);
+        }
+    }
+    return maxString;
+}
+
+function returnCount(s, l, r) {
+    while (s[l] === s[r] && l >= 0 && r < s.length) {
+        l--;
+        r++;
+    }
+    r = r - 1
+    l = l + 1
+    return r - l + 1;
+}
