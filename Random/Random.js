@@ -70,3 +70,31 @@ var removeElement = function (nums, val) {
     return n;
 };
 
+
+//#735 Asteroid Collision
+//Summary: Multiple ways to do this, implement a stack for most efficient
+//Solution below simulates bubble sort so NOT efficient
+
+var asteroidCollision = function (asteroids) {
+    let sorted = false;
+    while (!sorted) {
+        let i = 0;
+        sorted = true
+        while (i < asteroids.length) {
+            let current = asteroids[i];
+            let next = asteroids[i + 1];
+            if (current > 0 && next < 0 && next * -1 < current) {
+                sorted = false;
+                asteroids.splice(i + 1, 1)
+            } else if (current > 0 && next < 0 && next * -1 > current) {
+                sorted = false;
+                asteroids.splice(i, 1)
+            } else if (current > 0 && next < 0 && next * -1 === current) {
+                sorted = false;
+                asteroids.splice(i, 2)
+            }
+            i++
+        }
+    }
+    return asteroids;
+};

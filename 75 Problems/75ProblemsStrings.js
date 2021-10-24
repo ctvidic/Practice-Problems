@@ -170,3 +170,59 @@ function returnCount(s, l, r) {
     l = l + 1
     return r - l + 1;
 }
+
+//76 Minimum Window Substring
+//Summary: Sliding window problem, optimize for the minimum value
+//Time Complexity: O(N)
+var minWindow = function (s, t) {
+    let splitS = s.split('');
+    let tSplit = t.split('');
+    let min = "";
+    let j = 0;
+    let letterCount = {};
+    let sum = 0;
+    for (let j = 0; j < tSplit.length; j++) {
+        let letter = tSplit[j];
+        if (letterCount.hasOwnProperty(letter)) {
+            letterCount[letter] += 1;
+        } else {
+            sum += 1;
+            letterCount[letter] = 1;
+        }
+    }
+    for (let i = 0; i <= splitS.length; i++) {
+        let letter = splitS[i];
+        if (letterCount.hasOwnProperty(letter)) {
+            letterCount[letter] -= 1;
+            if (letterCount[letter] === 0) {
+                sum--;
+            }
+        }
+        if (sum === 0 && min === "") {
+            min = [j, i + 1]
+        }
+        // while(hasAllCharacters(letterCount) && j<=i){
+        while (sum === 0 && j <= i) {
+            min = compareMin(min, [j, i + 1]);
+            if (letterCount.hasOwnProperty(splitS[j])) {
+                letterCount[splitS[j]] += 1;
+                if (letterCount[splitS[j]] === 1) {
+                    sum++;
+                }
+            }
+            j++;
+        }
+    }
+    if (min.length > 0) {
+        return splitS.slice(min[0], min[1]).join('');
+    } else {
+        return ""
+    }
+
+};
+var compareMin = function (min, test) {
+    if ((test[1] - test[0]) < (min[1] - min[0])) {
+        return test
+    }
+    return min;
+}
