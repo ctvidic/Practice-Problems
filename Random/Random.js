@@ -98,3 +98,31 @@ var asteroidCollision = function (asteroids) {
     }
     return asteroids;
 };
+
+//1266 Minimum Time Visiting All Points
+//Summary: Diagonal is most efficient, optimize for diagonal
+//Time Complexity: O(N)
+
+var minTimeToVisitAllPoints = function (points) {
+    let seconds = 0;
+    if (points.length < 1) {
+        return seconds
+    }
+    for (let i = 0; i < points.length - 1; i++) {
+        let current = points[i]
+        let next = points[i + 1]
+        let temp = points[i]
+        if (next[0] === current[0]) {
+            seconds += Math.abs(next[1] - current[1])
+        } else if (next[1] === current[1]) {
+            seconds += Math.abs(next[0] - current[0]);
+        } else if (Math.abs(next[1] - current[1]) === Math.abs(next[0] - current[0])) {
+            seconds += Math.abs(next[1] - current[1])
+        } else {
+            let move = Math.min(Math.abs(next[1] - current[1]), Math.abs(next[0] - current[0]))
+            let max = Math.max(Math.abs(next[1] - current[1]), Math.abs(next[0] - current[0]))
+            seconds += move + (max - move)
+        }
+    }
+    return seconds;
+};

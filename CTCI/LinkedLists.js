@@ -108,3 +108,22 @@ var getIntersectionNode = function (headA, headB) {
     }
     return r1;
 };
+
+//2.8 Loop Detection
+//Summary: Have one going faster than slow, eventually, if there is a cycle they will 
+//be equal
+//Time Complexity: O(N)
+
+var hasCycle = function (head) {
+    let slowHead = head;
+    let fastHead = head;
+    while (fastHead && fastHead.next) {
+        slowHead = slowHead.next;
+        fastHead = fastHead.next.next;
+        if (slowHead === fastHead) {
+            return true;
+        }
+    }
+    return false;
+
+};
