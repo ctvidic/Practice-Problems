@@ -129,6 +129,7 @@ var findMin = function (nums) {
 //     IF LEFT < RIGHT --> IF LEFT > TARGET || TARGET > MID
 //     Num must be on right side
 //Use same logic for LEFT > RIGHT case
+//Easier way could be find minimum, then binary search on that half
 var search = function (nums, target) {
     if (nums == null || nums.length == 0) {
         return -1;

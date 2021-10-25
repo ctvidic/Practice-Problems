@@ -172,7 +172,9 @@ function returnCount(s, l, r) {
 }
 
 //76 Minimum Window Substring
-//Summary: Sliding window problem, optimize for the minimum value
+//Summary: Sliding window problem, optimize for the minimum value.
+//In order to pass TLE need time optimized way to check if all letters are present,
+//so utilize the sum variable.
 //Time Complexity: O(N)
 var minWindow = function (s, t) {
     let splitS = s.split('');
