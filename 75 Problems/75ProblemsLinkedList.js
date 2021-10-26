@@ -64,3 +64,25 @@ var mergeTwoLists = function (l1, l2) {
 };
 
 //#19 Remove Nth Node From End of List
+//Summary: A fast runner that will help identify where the slow runner should stop
+//Time Complexity: O(N)
+
+var removeNthFromEnd = function (head, n) {
+    let first = head;
+    let slow = head;
+    let fast = head;
+
+    for (let i = 0; i < n; i++) {
+        fast = fast.next;
+    };
+
+    if (!fast) {
+        return slow.next;
+    };
+    while (fast && fast.next) {
+        fast = fast.next;
+        slow = slow.next;
+    };
+    slow.next = slow.next.next;
+    return first;
+};

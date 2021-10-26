@@ -6,6 +6,9 @@
 - O(1) < O(logn) < O(n) < O(nlog(n)) < O(n^2) < O(2^n) < O(!n)
 - Best Link: https://www.bigocheatsheet.com/
 
+### Trends
+- Recursive calls tend to be 2^n, whereas a halfing operation leads to logN
+
 ### Built in Javascript BigO
 - While push and pop are O(1), unshift and split are O(n) as it requires reindexing.
 - Sort is N log N, but can N^2 depending on the engine
