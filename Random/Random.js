@@ -129,7 +129,8 @@ var minTimeToVisitAllPoints = function (points) {
 
 
 //2 Add Two Numbers
-//Summary: Similar to bit manipulation, need a carry\
+//Summary: Similar to bit manipulation, need a carry
+//By doing || carry you allow the carry to be tacked on at the end
 //Time Complexity: O(N)
 
 var addTwoNumbers = function (l1, l2) {
