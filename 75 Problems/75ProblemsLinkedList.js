@@ -168,3 +168,68 @@ var mergeList = function (listA, listB) {
     }
     return copy.next
 }
+
+
+//143: Reorder List
+//Summary: Break into smaller problems, get two linked list, one being one half
+//another being the reversed half, and then merge both.
+//Time complexity: O(N)
+
+var reorderList = function (head) {
+    let fast = head;
+    let slow = head;
+    while (fast !== null) {
+        if (fast.next !== null && fast.next.next !== null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        } else {
+            fast = null;
+        }
+    }
+    let reversedHalf = reverseList(slow.next);
+    slow.next = null;
+    return merge(head, reversedHalf);
+}
+
+var merge = function (listA, listB) {
+    let A = null;
+    let B = null;
+    let newStart = new ListNode(0);
+    let dummy = newStart;
+    let val = false;
+    while (listA !== null && listB !== null) {
+        newStart.next = listA;
+        listA = listA.next;
+        newStart.next.next = listB;
+        listB = listB.next;
+        newStart = newStart.next.next
+    }
+    if (listA) {
+        newStart.next = listA
+    }
+    if (listB) {
+        newStart.next = listB
+    }
+
+    // console.log(dummy)
+    return dummy.next;
+
+}
+
+
+
+
+var reverseList = function (node) {
+    let curr = node;
+    let prev = null;
+    let next = null;
+
+    while (curr !== null) {
+        next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    return prev;
+}
