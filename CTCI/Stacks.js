@@ -1,3 +1,4 @@
+//3.2
 //155 Min Stack
 //Summary: Find minimum value in constant time, so constantly calculate min with
 //each push of the stack

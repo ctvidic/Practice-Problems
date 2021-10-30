@@ -86,3 +86,85 @@ var removeNthFromEnd = function (head, n) {
     slow.next = slow.next.next;
     return first;
 };
+
+
+//#23 Merge K sorted Lists
+//Summary: Solution below merges lists one by one by one
+//Time Complexity: O(kN)
+var mergeKLists = function (lists) {
+    if (lists.length === 0) {
+        return null
+    }
+    while (lists.length > 1) {
+        let listA = lists.shift();
+        let listB = lists.shift();
+        let mergedList = mergeList(listA, listB);
+        lists.unshift(mergedList)
+    }
+    return lists[0]
+
+};
+
+var mergeList = function (listA, listB) {
+    let head = new ListNode(0);
+    let copy = head;
+    while (listA && listB) {
+        if (listA.val < listB.val) {
+            head.next = listA;
+            listA = listA.next;
+        } else {
+            head.next = listB;
+            listB = listB.next;
+        }
+        head = head.next
+    }
+    if (!listA) {
+        head.next = listB
+    }
+    if (!listB) {
+        head.next = listA
+    }
+    return copy.next
+}
+
+//Divide and Conquer speeds this process up signifigantly (30%--> 70%)
+
+var mergeKLists = function (lists) {
+    if (lists.length === 0) {
+        return null
+    }
+    while (lists.length > 1) {
+        for (let i = 0; i < lists.length; i += 2) {
+            let listA = lists[i];
+            let listB = lists[i + 1];
+            lists.splice(i + 1, 1)
+            lists.splice(i, 1)
+            let mergedList = mergeList(listA, listB);
+            lists.unshift(mergedList)
+        }
+    }
+    return lists[0]
+
+};
+
+var mergeList = function (listA, listB) {
+    let head = new ListNode(0);
+    let copy = head;
+    while (listA && listB) {
+        if (listA.val < listB.val) {
+            head.next = listA;
+            listA = listA.next;
+        } else {
+            head.next = listB;
+            listB = listB.next;
+        }
+        head = head.next
+    }
+    if (!listA) {
+        head.next = listB
+    }
+    if (!listB) {
+        head.next = listA
+    }
+    return copy.next
+}
