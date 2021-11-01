@@ -113,3 +113,18 @@ var invertTree = function (root) {
     invertTree(root.right);
     return root
 };
+
+
+//572 Subtree of Another Tree
+//Summary: Use DFS to analyze each node
+//Time Complexity: O(N)
+var isSubtree = function (s, t) {
+    if (!s) return false;
+    return isEqual(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+};
+
+function isEqual(root1, root2) {
+    if (!root1 || !root2) return !root1 && !root2; //ensure that nodes end at same level
+    if (root1.val !== root2.val) return false;
+    return isEqual(root1.left, root2.left) && isEqual(root1.right, root2.right);
+}
