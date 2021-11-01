@@ -128,3 +128,54 @@ function isEqual(root1, root2) {
     if (root1.val !== root2.val) return false;
     return isEqual(root1.left, root2.left) && isEqual(root1.right, root2.right);
 }
+
+//102 Binary Tree Level Order Traversal
+//Summary: Use BFS to track the levels
+//Time Complexity: O(N)
+var levelOrder = function (root) {
+    let queue = []
+    let output = []
+    queue.push(root);
+    let size
+    let cur
+    let currLevel
+    if (root) {
+        while (queue.length > 0) {
+            size = queue.length
+            currLevel = [];
+            for (let i = 0; i < size; i++) {
+                cur = queue.shift();
+                if (cur.left) {
+                    queue.push(cur.left);
+                }
+                if (cur.right) {
+                    queue.push(cur.right)
+                }
+                currLevel.push(cur.val)
+            }
+            output.push(currLevel)
+        }
+
+    }
+    return output
+};
+
+//105 Construct Binary Tree from Preorder and Inorder Traversal
+//Summary: Difficult problem, preorder is in order, but see if inorder is correct
+//Time Complexity: O(N)
+
+function buildTree(preorder, inorder) {
+    return build(0, inorder.length - 1);
+
+    function build(l, r) {
+        if (l > r) {
+            return null;
+        }
+        var v = preorder.shift();
+        var i = inorder.indexOf(v);
+        var root = new TreeNode(v);
+        root.left = build(l, i - 1);
+        root.right = build(i + 1, r); //1, 0
+        return root;
+    }
+}
