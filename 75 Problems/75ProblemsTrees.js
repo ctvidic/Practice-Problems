@@ -179,3 +179,24 @@ function buildTree(preorder, inorder) {
         return root;
     }
 }
+
+
+//98 Validate Binary Search Tree
+//Summary: DFS and compare using a helper method
+//Time Complexity: O(N)
+
+var isValidBST = function (root) {
+    if (!root) {
+        return false
+    }
+    function helper(root, min, max) {
+        if (!root) {
+            return true;
+        }
+        if ((max !== null && root.val >= max) || (min !== null && root.val <= min)) {
+            return false
+        }
+        return helper(root.left, min, root.val) && helper(root.right, root.val, max)
+    }
+    return helper(root, null, null);
+};
