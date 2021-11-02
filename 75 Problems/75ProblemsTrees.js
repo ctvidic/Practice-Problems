@@ -200,3 +200,44 @@ var isValidBST = function (root) {
     }
     return helper(root, null, null);
 };
+
+//Kth Smallest Element in a BST
+//Summary: Elegant Iterative Inorder Traversal
+//Time Complexiy: O(H+k) where H is the height
+
+var kthSmallest = function (root, k) {
+    if (!root) return null;
+    const stack = [];
+    let node = root;
+
+    while (stack.length || node) {
+        while (node) {
+            stack.push(node);
+            node = node.left;
+        }
+
+        node = stack.pop();
+        k--
+        if (k === 0) {
+            return node.val;
+        }
+        node = node.right;
+    }
+
+    return null;
+};
+//OR Recursive inoder traversal O(N)
+//More intuitive, less efficent though as we must go through whole tree
+var kthSmallest = function (root, k) {
+    arr = []
+    function helper(root) {
+        if (!root) {
+            return null
+        }
+        helper(root.left);
+        arr.push(root.val)
+        helper(root.right);
+    }
+    helper(root)
+    return arr[k - 1]
+};
