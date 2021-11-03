@@ -241,3 +241,22 @@ var kthSmallest = function (root, k) {
     helper(root)
     return arr[k - 1]
 };
+
+//235 Lowest Common Ancestor
+//Summary: Understand that if the root will always be less than one half
+//and greater than the other, therefore you can work your way down.
+//Time Complexity: O(N)
+
+var lowestCommonAncestor = function (root, p, q) {
+    while (root) {
+        if (root.val < p.val && root.val < q.val) {
+            root = root.right;
+        }
+        else if (root.val > p.val && root.val > q.val) {
+            root = root.left;
+        } else {
+            break;
+        }
+    }
+    return root;
+};
