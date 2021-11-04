@@ -218,3 +218,59 @@ var exist = function (board, word) {
     }
     return false;
 };
+
+
+//42 Trapping Rain Water
+//Time Complexity: O(N)
+//Summary: Similar to max water, iterate based on smaller side towards center
+
+function trap(height) {
+    if (height == null || height.length === 0) return 0;
+    let l = 0;
+    let r = height.length - 1;
+
+    let lMax = 0;
+    let rMax = 0;
+
+    let res = 0;
+
+    while (l < r) {
+        lMax = Math.max(lMax, height[l]);
+        if (height[l] < lMax) {
+            res += lMax - height[l];
+        }
+
+        rMax = Math.max(rMax, height[r]);
+        if (height[r] < rMax) {
+            res += rMax - height[r];
+        }
+
+        height[l] < height[r] ? l++ : r--;
+    }
+
+    return res;
+}
+
+//12 Integer to Roman
+//Summary: This is the easy way of doing it, make a hash a then loop
+//through each digit place
+//Time Complexity: O(N)
+
+function intToRoman(num) {
+    var hash = [
+        ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'],
+        ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'],
+        ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'],
+        ['', 'M', 'MM', 'MMM']
+    ];
+
+    var result = '';
+    var counter = 0;
+    while (num >= 1) {
+        result = hash[counter][num % 10] + result;
+        counter++
+        num = Math.floor(num / 10);
+    }
+
+    return result;
+};
