@@ -324,3 +324,33 @@ var mostCommonWord = function (paragraph, banned) {
     }
     return finalWord
 };
+
+//Reverse Nodes in K group
+//Summary: Use a runner to go k ahead to turn the tail to null,
+//reverse, then recursively call function with new head until
+//k length is not possible
+//Time Complexity: O(N)
+function reverseKGroup(head, k) {
+    if (!head) return null;
+    var tail = head;
+    for (var i = 1; i < k; i++) {
+        tail = tail.next;
+        if (!tail) return head;
+    }
+    var next = tail.next;
+    tail.next = null;
+    reverse(head);
+    head.next = reverseKGroup(next, k);
+    return tail;
+}
+
+function reverse(curr) {
+    var prev = null;
+    while (curr) {
+        var next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
