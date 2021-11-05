@@ -293,3 +293,34 @@ var removeDuplicates = function (s) {
     }
     return stack.join('')
 };
+
+
+//819 Most Common Word
+//Summary: Use a hash to store duplicate counts, iterate to see which count is
+//the highest
+//Time Complexity: O(N)
+
+var mostCommonWord = function (paragraph, banned) {
+    const bannedSet = new Set(banned);
+    const words = paragraph.toLowerCase().split(/\W+/);
+    const map = {};
+    let max = 0;
+    let finalWord;
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i]
+        if (map.hasOwnProperty(word)) {
+            map[word]++
+            if (map[word] > max) {
+                finalWord = word;
+                max = map[word]
+            }
+        } else if (banned.indexOf(word) === -1 && word.length > 0) {
+            if (max === 0) {
+                finalWord = word;
+                max = 1;
+            }
+            map[word] = 1
+        }
+    }
+    return finalWord
+};
