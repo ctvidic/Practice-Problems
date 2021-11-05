@@ -274,3 +274,22 @@ function intToRoman(num) {
 
     return result;
 };
+
+
+//Remove Duplicates 1047
+//Summary: Use a stack DS, basically it
+//Time Complexity: O(N)
+var removeDuplicates = function (s) {
+    let i = 0;
+    let splitS = s.split('')
+    let stack = []
+    while (i < splitS.length) {
+        if (stack[stack.length - 1] === splitS[i]) {
+            stack.pop()
+        } else {
+            stack.push(splitS[i])
+        }
+        i++
+    }
+    return stack.join('')
+};
