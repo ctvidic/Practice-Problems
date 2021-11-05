@@ -382,3 +382,50 @@ var reorderLogFiles = function (logs) {
     }
     return letLogs.concat(digiLogs)
 };
+
+
+//200 Num Islands
+//Summary: DFS approach, pretty straightforward
+//Time Complexity: O(M x N) M--> # Rows N--> #Cols
+
+var numIslands = function (grid) {
+    let gridCopy = grid.slice()
+
+    var dfs = function (col, row) {
+        gridCopy[col][row] = 'X'
+        if (col > gridCopy.length || col < 0) {
+            return
+        }
+        if (row > gridCopy[col].length || row < 0) {
+            return
+        }
+        if (gridCopy[col][row - 1] === '1') {
+            console.log('hit')
+            dfs(col, row - 1)
+        }
+        if (gridCopy[col][row + 1] === '1') {
+            dfs(col, row + 1)
+        }
+        if (gridCopy[col + 1]) {
+            if (gridCopy[col + 1][row] === '1') {
+                dfs(col + 1, row)
+            }
+        }
+        if (gridCopy[col - 1]) {
+            if (gridCopy[col - 1][row] === '1') {
+                dfs(col - 1, row)
+            }
+        }
+    }
+    let total = 0;
+    for (let col = 0; col < grid.length; col++) {
+        for (let row = 0; row < grid[col].length; row++) {
+            if (gridCopy[col][row] === '1') {
+                dfs(col, row)
+                total++
+            }
+        }
+    }
+    return total
+
+};
