@@ -354,3 +354,31 @@ function reverse(curr) {
     }
     return prev;
 }
+
+//937 Reorder Log Files
+//Summary: First use isNaN to check if its not a number,
+//then use localeCompare to first check everything after identifier,
+//then check identifiers
+//Time Complexity: O(M*N*Log(N))
+
+var reorderLogFiles = function (logs) {
+
+    let letLogs = []
+    let digiLogs = []
+    for (let i = 0; i < logs.length; i++) {
+        let log = logs[i]
+        if (!isNaN(log.split(' ')[1])) {
+            digiLogs.push(log)
+        } else {
+            letLogs.push(log)
+            letLogs.sort((a, b) => {
+                const aBody = a.slice(a.indexOf(' ') + 1);
+                const bBody = b.slice(b.indexOf(' ') + 1);
+                const c = aBody.localeCompare(bBody);
+                if (c) return c;
+                return a.localeCompare(b)
+            });
+        }
+    }
+    return letLogs.concat(digiLogs)
+};
