@@ -429,3 +429,31 @@ var numIslands = function (grid) {
     return total
 
 };
+
+//1710 Maximum Units on a Truck
+//Summary: Be greedy in this solution, always optimize for the
+//unit to box ratio. Sort than implement
+//Time Complexity: O(N)
+
+var maximumUnits = function (boxTypes, truckSize) {
+    let sizeCopy = truckSize
+    boxTypes.sort((a, b) => {
+        if (a[1] < b[1]) {
+            return 1;
+        } else {
+            return -1;
+        }
+    })
+    let numUnits = 0;
+    for (let i = 0; i < boxTypes.length; i++) {
+        while (boxTypes[i][0] > 0 && sizeCopy > 0) {
+            if (sizeCopy > 0) {
+                numUnits += boxTypes[i][1]
+                boxTypes[i][0]--
+                sizeCopy--
+            }
+        }
+    }
+    return numUnits
+
+};
