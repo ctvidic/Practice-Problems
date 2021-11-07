@@ -512,3 +512,52 @@ var diameterOfBinaryTree = function (root) {
         return 1 + Math.max(left, right);
     }
 };
+
+//1041 Robot Bounded In Circle
+//Summary: Simulate the robot moving, but utilize 4 cycles to verify
+//the location, this is more of mathematical problem
+//Time Complexity: 4*O(N)
+
+var isRobotBounded = function (instructions) {
+    let splitI = instructions.split('')
+    let pos = [0, 0]
+    let directionVal = 0;
+    let x = 0
+    while (x < 4) {
+        for (let i = 0; i < splitI.length; i++) {
+            if (splitI[i] === 'G') {
+                pos = positionChange(pos, directionVal)
+            } else if (splitI[i] === 'L') {
+                directionVal--
+                if (directionVal < 0) {
+                    directionVal = 3;
+                }
+            } else if (splitI[i] === 'R') {
+                directionVal++
+                if (directionVal > 3) {
+                    directionVal = 0
+                }
+            }
+        }
+        x++
+    }
+
+    if (pos[0] !== 0 || pos[1] !== 0) {
+        return false
+    }
+    return true
+
+};
+
+var positionChange = function (pos, direction) {
+    if (direction === 0) {
+        pos[1]++;
+    } else if (direction === 2) {
+        pos[1]--
+    } else if (direction === 3) {
+        pos[0]--
+    } else if (direction === 1) {
+        pos[0]++
+    }
+    return pos
+}
