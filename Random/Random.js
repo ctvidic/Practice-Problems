@@ -457,3 +457,58 @@ var maximumUnits = function (boxTypes, truckSize) {
     return numUnits
 
 };
+
+
+//6 ZigZag Conversion
+//Summary: Iterate through each row, algorithm has to precisely add each charcter
+//Time Complexity: O(N)
+
+var convert = function (s, numRows) {
+    if (numRows === 1) {
+        return s
+    }
+    let splitS = s.split('');
+    let finalS = ''
+    let i = 0;
+    let row = 0;
+    while (row < numRows) { //outer while loop iterates through each row
+        i = row
+        while (i < splitS.length) { //inner loop adds the characters of row each to the final string
+            if (row > 0 && row < numRows - 1) {
+                finalS += splitS[i] //first add first character 
+                if (i + 2 * (numRows) - 2 * (row) - 2 < splitS.length) {
+                    finalS += splitS[i + (2 * numRows) - (2 * row) - 2] //then add zig zag character in same row
+                }
+                i += (2 * numRows - 2)
+            } else { //else statement only applies to outer rows not affected by zigzag
+                finalS += splitS[i]
+                i += (2 * numRows - 2)
+            }
+        }
+        row++
+    }
+    return finalS
+};
+
+//543 Diameter of Binary Tree
+//Summary: Recursively find max distance using DFS
+//Time Complexity: O(N)
+
+var diameterOfBinaryTree = function (root) {
+    let diameter = 0;
+
+    dfs(root);
+
+    return diameter;
+
+    function dfs(node, level) {
+        if (!node) return 0;
+
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+
+        diameter = Math.max(diameter, left + right);
+
+        return 1 + Math.max(left, right);
+    }
+};
