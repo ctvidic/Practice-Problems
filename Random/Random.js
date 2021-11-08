@@ -561,3 +561,22 @@ var positionChange = function (pos, direction) {
     }
     return pos
 }
+//56 Merge Intervals
+//Summary: Merge intervals if max is greater than min, mutate original array
+//Time Complexity: O(nlogn)
+var merge = function (intervals) {
+    if (intervals.length < 2) return intervals;
+    intervals.sort((a, b) => a[0] - b[0]) //Arr have smaller element come first
+    let i = 1;
+    while (i < intervals.length) {
+        curr = intervals[i];
+        prev = intervals[i - 1];
+        if (curr[0] <= prev[1]) {
+            intervals[i] = [Math.min(prev[0], curr[0]), Math.max(prev[1], curr[1])]
+            intervals.splice(i - 1, 1);
+            i--
+        }
+        i++
+    }
+    return intervals
+};
