@@ -519,7 +519,7 @@ var positionChange = function (pos, direction) {
 }
 
 
-//680 Valid Palindrom II
+//680 Valid Palindrome II
 //Summary: Pretty inefficient solution but seems to be O(N),
 //self explanatory, requires helper methods, note you are only
 //looking for one instance where this is not true. If both cuts
@@ -544,3 +544,25 @@ const validPalindrome = (s) => {
 const cut = (s, i) => s.substr(0, i) + s.substr(i + 1);
 
 const isPalindrome = (s) => s === s.split('').reverse().join('');
+
+
+//108 Convert Sorted Array to Binary Tree
+//Summary: Important to note that using eith Math.floor
+//or Math.ceil work in this instance, even though there will
+//be two different answers both are valid
+//Time Complexity: O(N)
+
+var sortedArrayToBST = function (nums) {
+    const helper = function (left, right) {
+        if (left > right) {
+            return null
+        }
+        let mid = Math.floor((left + right) / 2)
+        let root = new TreeNode(nums[mid]);
+        root.left = helper(left, mid - 1)
+        root.right = helper(mid + 1, right)
+        return root
+    }
+
+    return helper(0, nums.length - 1)
+};
