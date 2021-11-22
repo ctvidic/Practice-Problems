@@ -621,3 +621,57 @@ for (let i = 0; i < nums.length; i++) {
     nums[index] = -Math.abs(nums[index])
 }
 return result
+
+
+//4 Median of Two Sorted Arrays
+//Summary: Fairly difficult, partition both arrays, then
+//use a modified binary search to go through
+//Time Complexity: O(log(m+n))
+var findMedianSortedArrays = function (nums1, nums2) {
+
+
+    //Find smallest array, always have it be nums1
+    if (nums1.length > nums2.length) {
+        return findMedianSortedArrays(nums2, nums1);
+    }
+    const m = nums1.length;
+    const n = nums2.length;
+
+    //Set start to 0, end to end of nums1
+    let start = 0;
+    let end = m;
+    // Binary search starts from here
+    while (start <= end) {
+        //Find median of first array         
+        let partitionNums1 = Math.floor((start + end) / 2);
+        //Find median of sorted, minus partitionNums
+        let partitionNums2 = Math.floor((m + n + 1) / 2) - partitionNums1;
+
+        // Edge cases
+        // If there are no elements left on the left side after partition
+        let maxLeftNums1 = partitionNums1 == 0 ? Number.MIN_SAFE_INTEGER : nums1[partitionNums1 - 1];
+        // If there are no elements left on the right side after partition
+        let minRightNums1 = partitionNums1 == m ? Number.MAX_SAFE_INTEGER : nums1[partitionNums1];
+
+        // Similarly for nums2
+        let maxLeftNums2 = partitionNums2 == 0 ? Number.MIN_SAFE_INTEGER : nums2[partitionNums2 - 1];
+        let minRightNums2 = partitionNums2 == n ? Number.MAX_SAFE_INTEGER : nums2[partitionNums2];
+        // Check if we have found the match
+        if (maxLeftNums1 <= minRightNums2 && maxLeftNums2 <= minRightNums1) {
+            // Check if the combined array is of even/odd length
+            if ((m + n) % 2 == 0) {
+                return (Math.max(maxLeftNums1, maxLeftNums2) + Math.min(minRightNums1, minRightNums2)) / 2.0;
+            } else {
+                return Math.max(maxLeftNums1, maxLeftNums2);
+            }
+        }
+        // If we are too far on the right, we need to go to left side
+        else if (maxLeftNums1 > minRightNums2) {
+            end = partitionNums1 - 1;
+        }
+        // If we are too far on the left, we need to go to right side
+        else {
+            start = partitionNums1 + 1;
+        }
+    }
+};
