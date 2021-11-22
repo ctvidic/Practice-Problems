@@ -604,3 +604,19 @@ var sortedArrayToBST = function (nums) {
 
     return helper(0, nums.length - 1)
 };
+
+
+//442: Find Duplicates in an Array
+//Summary: Key thing is that numbers are between 1 and the index,
+//therefore loop through once and mark numbers as negative, if number
+//is negative push it into results array.
+//Time Complexity: O(n), Space: Constant
+
+for (let i = 0; i < nums.length; i++) {
+    const index = Math.abs(nums[i]) - 1
+    if (nums[index] < 0) {
+        result.push(index + 1)
+    }
+    nums[index] = -Math.abs(nums[index])
+}
+return result
