@@ -612,7 +612,7 @@ var sortedArrayToBST = function (nums) {
 //is negative push it into results array. Each integer also only appears
 //ONCE or TWICE
 //Time Complexity: O(n), Space: Constant
-
+var findDuplicates = function(nums){
 for (let i = 0; i < nums.length; i++) {
     const index = Math.abs(nums[i]) - 1
     if (nums[index] < 0) {
@@ -621,7 +621,7 @@ for (let i = 0; i < nums.length; i++) {
     nums[index] = -Math.abs(nums[index])
 }
 return result
-
+}
 
 //4 Median of Two Sorted Arrays
 //Summary: Fairly difficult, partition both arrays, then
@@ -674,4 +674,32 @@ var findMedianSortedArrays = function (nums1, nums2) {
             start = partitionNums1 + 1;
         }
     }
+};
+
+
+//22 Generate Parentheses
+//Summary: Utilize basic backtracking to build out the parentheses
+//Parenthese MUST have equal number of left and right to be valid
+//Instead of adding '(' or ')' every time as in Approach 1, 
+//let's only add them when we know it will remain a valid sequence. 
+// We can do this by keeping track of the number of opening and closing brackets we have placed so far.
+//Time Complexity: O(4^n/sqrt(n)) H
+
+
+
+const generateParenthesis = (n) => {
+    const res = [];
+
+    function backtrack(l, r, s) {  // l: left remaining, r: right remaining
+        if (l > r) return;  // The number of '(' should be always >= ')'
+        if (l === 0 && r === 0) {
+            res.push(s);
+            return;
+        }
+        if (l > 0) backtrack(l - 1, r, s + '(');
+        if (r > 0) backtrack(l, r - 1, s + ')');
+    }
+
+    backtrack(n, n, '');
+    return res;
 };
