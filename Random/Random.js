@@ -703,3 +703,22 @@ const generateParenthesis = (n) => {
     backtrack(n, n, '');
     return res;
 };
+
+//1470 Shuffle The Array
+//Summary: Very easy, just have a second pointer starting at part of array
+//to be mixed in, continue until second pointer ends
+//Time Complexity: O(N)
+
+
+var shuffle = function(nums, n) {
+    let x = 0;
+    let y = n;
+    let newArr =[];
+    while(y<nums.length){
+        newArr.push(nums[x])
+        newArr.push(nums[y])
+        x++;
+        y++;
+    }
+    return newArr
+};
