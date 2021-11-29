@@ -722,3 +722,49 @@ var shuffle = function(nums, n) {
     }
     return newArr
 };
+
+
+//767 Reorganize String
+//Summary: First create hash of amount of times a character appears,
+//then sort hash by number of times. We then take a greedy approach and insert the
+//character into alternating (even or odd) spots to ensure they are not next to each other.
+//Then move onto next character until entire new array is filled.
+//Time Complexity: O(N)
+let reorganizeString = function (S) {
+    let frequencyMap = generateFrequencyMap(S);
+
+    let charactersByFrequency = Object.keys(frequencyMap).sort((a, b) => frequencyMap[b] - frequencyMap[a]);
+    let res = new Array(S.length);
+    let characterIndex = 0;
+    for (let i = 0; i < S.length; i++) {
+        const totalOccurrences = frequencyMap[charactersByFrequency[i]];
+
+        for (let j = 0; j < totalOccurrences; j++) {
+            if (characterIndex >= S.length) {
+                characterIndex = 1;
+            }
+            res[characterIndex] = charactersByFrequency[i];
+            characterIndex += 2;
+        }
+    }
+
+    for (let i = 1; i < res.length; i++) {
+        if (res[i] === res[i - 1]) {
+            return "";
+        }
+    }
+
+    return res.join('');
+};
+
+function generateFrequencyMap(str) {
+    let map = {};
+    for (let i = 0; i < str.length; i++) {
+        if (map[str[i]] !== undefined) {
+            map[str[i]]++;
+        } else {
+            map[str[i]] = 1;
+        }
+    }
+    return map;
+}
