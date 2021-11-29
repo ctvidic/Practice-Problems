@@ -768,3 +768,37 @@ function generateFrequencyMap(str) {
     }
     return map;
 }
+
+//17 Letter Combinations of a Phone Number
+//Summary: Use recursive backtracking to find all possible numbers
+//Time Complexity: O(N)
+
+var letterCombinations = function (digits) {
+    const res = [];
+    let map = {
+        '2': ['a', 'b', 'c'],
+        '3': ['d', 'e', 'f'],
+        '4': ['g', 'h', 'i'],
+        '5': ['j', 'k', 'l'],
+        '6': ['m', 'n', 'o'],
+        '7': ['p', 'q', 'r', 's'],
+        '8': ['t', 'u', 'v'],
+        '9': ['w', 'x', 'y', 'z'],
+    }
+    let digitsSplit = digits.split('');
+    if (digits.length === 0) {
+        return []
+    }
+    function backtrack(digits, string) {  // l: left remaining, r: right remaining
+        if (digits.length === 0) {
+            res.push(string)
+            return
+        }
+        let newDigit = digits[0];
+        for (let i = 0; i < map[newDigit].length; i++) {
+            backtrack(digits.slice(1), string + map[newDigit][i])
+        }
+    }
+    backtrack(digitsSplit, '');
+    return res;
+};
